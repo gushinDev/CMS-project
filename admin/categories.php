@@ -1,19 +1,12 @@
 <?php include('admin-includes/header.php'); ?>
 
 <?php
-if (isset($_GET['delete_category'])) {
-  $cat_id = $_GET['delete_category'];
-  $sql = "DELETE FROM `categories` WHERE `cat_id` = '$cat_id'";
-  $result = mysqli_query($connection, $sql);
-  if (!$result) {
-    die(mysqli_error($connection));
-  }
-  header('Location: ./categories.php');
-} ?>
+delete_category();
+update_category();
+?>
 
 <div id="wrapper">
   <?php include('admin-includes/navigation.php'); ?>
-
   <div id="page-wrapper">
     <div class="container-fluid">
 
@@ -25,20 +18,7 @@ if (isset($_GET['delete_category'])) {
           </h1>
           <div class="col-xs-4">
             <?php
-            if (isset($_POST['submit'])) {
-
-              if (empty($_POST['new-category']) || ($_POST['new-category'] === '')) {
-                echo ('<p>empty field</p>');
-              } else {
-                $new_category = $_POST['new-category'];
-                $sql = "INSERT INTO `categories` (`cat_id`, `cat_title`) VALUES (NULL, '{$new_category}');";
-                $result = mysqli_query($connection, $sql);
-                if (!$result) {
-                  die('Something went wrong. Please try again later.');
-                }
-                header('Location: ./categories.php');
-              }
-            }
+            insert_new_category();
             ?>
             <p>Add category</p>
             <form action="categories.php" method="post" class="form">
@@ -49,14 +29,26 @@ if (isset($_GET['delete_category'])) {
                 <button type="submit" class="btn btn-primary" name="submit">Add</button>
               </div>
             </form>
+
             <p>Edit category</p>
+
+            <?php
+            if (isset($_GET['edit_title'])) {
+              $changing_category = $_GET['edit_title'];
+              $changing_cat_id = $_GET['edit_id'];
+            } else {
+              $changing_category = '';
+              $changing_cat_id = '';
+            }
+            ?>
 
             <form action="categories.php" method="post" class="form">
               <div class="form-group">
-                <input type="text" name="new-category" id="new-category" class="form-control">
+                <input type="hidden" name="changing_category_id" value="<?= $changing_cat_id ?>">
+                <input type="text" name="changing_category" id="changing_category" class="form-control" value="<?= $changing_category ?>">
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" name="submit">Edit</button>
+                <button type="submit" class="btn btn-primary" name="submit_changing">Edit</button>
               </div>
             </form>
           </div>
@@ -71,17 +63,8 @@ if (isset($_GET['delete_category'])) {
               </thead>
               <tbody>
                 <?php
-                $sql = "SELECT * FROM `categories`;";
-                $categories = mysqli_query($connection, $sql);
-
-                while ($row = mysqli_fetch_array($categories)) : ?>
-                  <tr>
-                    <td scope='col'><?= $row['cat_id'] ?></td>
-                    <td scope='col'><?= $row['cat_title'] ?></td>
-                    <td scope='col'><a href="categories.php?edit_category=<?= $row['cat_id'] ?>">Edit</a></td>
-                    <td scope='col'><a href="categories.php?delete_category=<?= $row['cat_id'] ?>">Delete</a></td>
-                  </tr>
-                <?php endwhile; ?>
+                findAllCategories();
+                ?>
               </tbody>
             </table>
           </div>

@@ -4,8 +4,6 @@
   <div class="well">
     <h4>Blog Search</h4>
 
-
-
     <!-- Search Form -->
     <form action="index.php" method="post">
       <div class="input-group">

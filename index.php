@@ -23,28 +23,21 @@
 
         $rows = mysqli_num_rows($posts);
 
-
-
         if ($rows === 0) {
-        
           $search_message = "No results found.";
-
         } else {
-
           $search_message = "There are " . $rows . " results found.";
-
         }
 
         echo "<h1 class='page-header'>
                 {$search_message}
               </h1> ";
-
-
       } else {
+
         $sql = 'SELECT * FROM `posts`';
         $posts = mysqli_query($connection, $sql);
-        
-         echo'<h1 class="page-header">
+
+        echo '<h1 class="page-header">
                 Posts
               </h1>';
       }

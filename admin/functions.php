@@ -67,3 +67,13 @@ function findAllCategories()
           </tr>";
   }
 }
+
+function findAllPosts(){
+  global $connection;
+  $sql = "SELECT * FROM `posts`";
+  $posts = mysqli_query($connection, $sql);
+  if(!$posts) {
+    die('No posts finded');
+  }
+  return $posts;
+}

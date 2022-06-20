@@ -10,7 +10,6 @@
     <div class="col-lg-8">
 
       <!-- Blog Post -->
-
       <!-- Title -->
       <h1>Blog Post Title</h1>
 

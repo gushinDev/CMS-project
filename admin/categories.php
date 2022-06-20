@@ -1,4 +1,5 @@
 <?php include('admin-includes/header.php'); ?>
+<?php include('admin-includes/navigation.php'); ?>
 
 <?php
 delete_category();
@@ -6,7 +7,6 @@ update_category();
 ?>
 
 <div id="wrapper">
-  <?php include('admin-includes/navigation.php'); ?>
   <div id="page-wrapper">
     <div class="container-fluid">
 

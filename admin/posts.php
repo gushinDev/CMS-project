@@ -17,8 +17,8 @@
               case 'add_post':
                 include "admin-includes/add_post.php";
                 break;
-              case '100':
-                echo "Nice 100";
+              case 'delete_post':
+                deletePost($_GET);
                 break;
               case '200':
                 echo 'Nice 200';

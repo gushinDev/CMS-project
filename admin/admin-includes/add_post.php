@@ -6,7 +6,6 @@ if (isset($_POST['create_post'])) {
   $title = $_POST['title'];
   $category_id = $_POST['category_id'];
   $author = $_POST['author'];
-
   $status = isset($_POST['status']) ? 'Draft' : 'Ready';
 
   $image = $_FILES['image']['name'];
@@ -23,6 +22,7 @@ if (isset($_POST['create_post'])) {
 
   $query = mysqli_query($connection, $sql_query_new_post);
   move_uploaded_file($image_temp, "../img/$image");
+  header('Location: ./posts.php');
 }
 ?>
 

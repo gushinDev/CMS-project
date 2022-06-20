@@ -11,9 +11,7 @@ function insert_new_category()
       $new_category = $_POST['new-category'];
       $sql = "INSERT INTO `categories` (`cat_id`, `cat_title`) VALUES (NULL, '{$new_category}');";
       $result = mysqli_query($connection, $sql);
-      if (!$result) {
-        die('Something went wrong. Please try again later.');
-      }
+      checkQueryFailed($result);
       header('Location: ./categories.php');
     }
   }
@@ -30,9 +28,7 @@ function update_category()
           SET `cat_title` = '{$changing_cat_title}' 
           WHERE `cat_id` = '{$changing_cat_id}'";
     $query = mysqli_query($connection, $sql);
-    if (!$query) {
-      die(mysqli_error($connection));
-    }
+    checkQueryFailed($query);
     header('Location: ./categories.php');
   }
 }
@@ -44,9 +40,7 @@ function delete_category()
     $cat_id = $_GET['delete_category'];
     $sql = "DELETE FROM `categories` WHERE `cat_id` = '$cat_id'";
     $result = mysqli_query($connection, $sql);
-    if (!$result) {
-      die(mysqli_error($connection));
-    }
+    checkQueryFailed($result);
     header('Location: ./categories.php');
   }
 }
@@ -58,6 +52,8 @@ function findAllCategories()
   $sql = "SELECT * FROM `categories`;";
   $categories = mysqli_query($connection, $sql);
 
+  checkQueryFailed($categories);
+
   while ($row = mysqli_fetch_array($categories)) {
     echo "<tr>
             <td scope='col'>{$row['cat_id']}</td>
@@ -68,12 +64,31 @@ function findAllCategories()
   }
 }
 
-function findAllPosts(){
+function findAllPosts()
+{
   global $connection;
   $sql = "SELECT * FROM `posts`";
-  $posts = mysqli_query($connection, $sql);
-  if(!$posts) {
-    die('No posts finded');
+  $query = mysqli_query($connection, $sql);
+  checkQueryFailed($query);
+  return $query;
+}
+
+function deletePost($params)
+{
+  global $connection;
+  if (isset($params['post_id'])) {
+    $post_id = $params['post_id'];
+    $sql = "DELETE FROM `posts` WHERE `post_id` = '$post_id'";
+    $query = mysqli_query($connection, $sql);
+    checkQueryFailed($query);
+    header('Location: ./posts.php');
   }
-  return $posts;
+}
+
+function checkQueryFailed($query)
+{
+  global $connection;
+  if (!$query) {
+    die('Query is failed' . mysqli_error($connection));
+  }
 }

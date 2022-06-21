@@ -92,3 +92,31 @@ function checkQueryFailed($query)
     die('Query is failed' . mysqli_error($connection));
   }
 }
+
+function createNewPost() {
+  if (isset($_POST['create_post'])) {
+
+    global $connection;
+
+    $title = $_POST['title'];
+    $category_id = $_POST['category_id'];
+    $author = $_POST['author'];
+    $status = isset($_POST['status']) ? 'Draft' : 'Ready';
+
+    $image = $_FILES['image']['name'];
+    $image_temp = $_FILES['image']['tmp_name'];
+
+    $tags = $_POST['tags'];
+    $content = $_POST['content'];
+    $date = date('d-m-y');
+    $comment_count = 1;
+
+    $sql_query_new_post =
+      "INSERT INTO `posts` (`post_id`, `post_category_id`, `post_title`, `post_author`, `post_date`, `post_image`, `post_content`, `post_tags`, `post_comment_count`, `post_status`) 
+    VALUES (NULL, '$category_id', '$title', '$author', '$date', '$image', '$content', '$tags', '$comment_count', '$status')";
+
+    $query = mysqli_query($connection, $sql_query_new_post);
+    move_uploaded_file($image_temp, "../img/$image");
+    header('Location: ./posts.php');
+  }
+}

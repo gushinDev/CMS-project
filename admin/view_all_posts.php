@@ -26,7 +26,8 @@
          <td scope="col"><?= $row['post_tags'] ?></td>
          <td scope="col"><img width="100px" src="../img/<?= $row['post_image'] ?>"></td>
          <td scope="col"><?= $row['post_comment_count'] ?></td>
-         <td scope="col"><a href="posts.php?source=delete_post&post_id=<?= $row['post_id']?>">Delete</a></td>
+         <td scope="col"><a href="posts.php?source=delete_post&post_id=<?= $row['post_id'] ?>">Delete</a></td>
+         <td scope="col"><a href="posts.php?source=edit_post&post_id=<?= $row['post_id'] ?>">Edit</a></td>
        </tr>
      <?php endwhile; ?>
 

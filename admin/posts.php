@@ -20,8 +20,8 @@
               case 'delete_post':
                 deletePost($_GET);
                 break;
-              case '200':
-                echo 'Nice 200';
+              case 'edit_post':
+                include "admin-includes/edit_post.php";
                 break;
               default:
                 include('view_all_posts.php'); 

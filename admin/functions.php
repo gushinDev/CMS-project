@@ -73,11 +73,11 @@ function findAllPosts()
   return $query;
 }
 
-function deletePost($params)
+function deletePost()
 {
   global $connection;
-  if (isset($params['post_id'])) {
-    $post_id = $params['post_id'];
+  if (isset($_GET['post_id'])) {
+    $post_id = $_GET['post_id'];
     $sql = "DELETE FROM `posts` WHERE `post_id` = '$post_id'";
     $query = mysqli_query($connection, $sql);
     checkQueryFailed($query);

@@ -1,5 +1,5 @@
 <?php
-  createNewPost();
+createNewPost();
 ?>
 
 <form action="" method="POST" enctype="multipart/form-data">
@@ -19,18 +19,16 @@
     <input type="text" name="author" id="author" class="form-control">
   </div>
 
-  <!-- <div class="form-group">
-    <label for="status">Status</label>
-    <input type="text" name="status" id="status" class="form-control">
-  </div> -->
-
   <div class="form-check form-group">
-    <label class="form-check-label" for="exampleCheck1">Draft </label>
-    <input type="checkbox" class="form-check-input" id="exampleCheck1" checked name="status">
+    <label class="form-check-label" for="exampleCheck1">Status </label>
+    <input type="checkbox" class="form-check-input" id="exampleCheck1" name="status">
   </div>
 
   <div class="form-group">
-    <label for="image">Image</label>
+    <img src="" class="editPostCurrentImage" height="200px">
+  </div>
+  
+  <div class="form-group">
     <input type="file" name="image" id="image" class="form-control-file">
   </div>
 

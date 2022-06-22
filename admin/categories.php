@@ -63,7 +63,15 @@ update_category();
               </thead>
               <tbody>
                 <?php
-                findAllCategories();
+                $categories = findAllCategories();
+                while ($row = mysqli_fetch_array($categories)) {
+                  echo "<tr>
+                          <td scope='col'>{$row['cat_id']}</td>
+                          <td scope='col'>{$row['cat_title']}</td>
+                          <td scope='col'><a href='categories.php?edit_title={$row['cat_title']}&edit_id={$row['cat_id']}'>Edit</a></td>
+                          <td scope='col'><a href='categories.php?delete_category={$row['cat_id']}'>Delete</a></td>
+                        </tr>";
+                }
                 ?>
               </tbody>
             </table>

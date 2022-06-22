@@ -18,7 +18,7 @@
                 include "admin-includes/add_post.php";
                 break;
               case 'delete_post':
-                deletePost($_GET);
+                deletePost();
                 break;
               case 'edit_post':
                 include "admin-includes/edit_post.php";

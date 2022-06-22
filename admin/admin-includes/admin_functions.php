@@ -101,7 +101,7 @@ function createNewPost() {
     $title = $_POST['title'];
     $category_id = $_POST['category_id'];
     $author = $_POST['author'];
-    $status = isset($_POST['status']) ? 'Draft' : 'Ready';
+    $status = isset($_POST['status']) ? 'Published' : 'Not published';
 
     $image = $_FILES['image']['name'];
     $image_temp = $_FILES['image']['tmp_name'];

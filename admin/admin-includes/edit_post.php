@@ -13,25 +13,29 @@ if (isset($_GET['post_id'])) {
 
 if (isset($_POST['update_post'])) {
 
-  var_dump($_FILES);
+  // var_dump($_FILES);
   $post_id = $_POST['post_id'];
   $title = $_POST['title'];
   $category_id = $_POST['category_id'];
   $author = $_POST['author'];
   $tags = $_POST['tags'];
   $content = $_POST['content'];
-
   $status = $_POST['status'];
-  // $image = $_FILES['image']['name'];
-  // $image_temp = $_FILES['image']['tmp_name'];
+  $image = $_FILES['image']['name'];
+  $image_temp = $_FILES['image']['tmp_name'];
 
   $sql = "UPDATE `posts` 
-          SET `post_title` = '$title', `post_category_id` = '$category_id', post_author = '$author', `post_content` = '$content', `post_tags` = '$tags'
-          WHERE `post_id` = '$post_id'";
+          SET `post_title` = '$title', `post_category_id` = '$category_id', post_author = '$author', `post_content` = '$content', `post_tags` = '$tags'";
+  $sql .=  $image !== '' ? ", `post_image` = '$image' " : ' ';
+  $sql .= "WHERE `post_id` = '$post_id'";
 
   $query = mysqli_query($connection, $sql);
   checkQueryFailed($query);
-  // header('Location: ./posts.php');
+
+  if ($image !== '') {
+    move_uploaded_file($image_temp, "../img/$image");
+  }
+  header('Location: ./posts.php');
 }
 
 ?>
@@ -41,7 +45,6 @@ if (isset($_POST['update_post'])) {
   <input type="hidden" name="post_id" value="<?= $post_id ?>">
 
   <?php while ($row = mysqli_fetch_assoc($query)) : ?>
-    <?php var_dump($row); ?>
 
     <div class="form-group">
       <label for="title">Title</label>
@@ -64,8 +67,8 @@ if (isset($_POST['update_post'])) {
     </div> -->
 
     <div class="form-check form-group">
-      <label class="form-check-label" for="exampleCheck1">Draft </label>
-      <input type="checkbox" class="form-check-input" id="exampleCheck1" name="status">
+      <label class="form-check-label" for="exampleCheck1">Published </label>
+      <input type="checkbox" class="form-check-input" id="exampleCheck1" name="status" <?= $row['post_status'] === 'Published' ? 'checked' : 'unchecked'?>>
     </div>
 
     <div class="form-group">
@@ -82,7 +85,7 @@ if (isset($_POST['update_post'])) {
       </div>
 
       <div class="form-group">
-        <label for="status">Content</label>
+        <label for="content">Content</label>
         <textarea name="content" id="content" cols="30" rows="10" class="form-control"><?= $row['post_content']; ?></textarea>
       </div>
 

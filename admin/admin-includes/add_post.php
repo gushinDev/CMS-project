@@ -20,8 +20,8 @@ createNewPost();
   </div>
 
   <div class="form-check form-group">
-    <label class="form-check-label" for="exampleCheck1">Status </label>
-    <input type="checkbox" class="form-check-input" id="exampleCheck1" name="status">
+    <label class="form-check-label" for="exampleCheck1">Published </label>
+    <input type="checkbox" class="form-check-input" id="exampleCheck1" name="status" unchecked>
   </div>
 
   <div class="form-group">

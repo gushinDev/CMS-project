@@ -52,15 +52,16 @@
         </p>
         <p><span class="glyphicon glyphicon-time"></span> Posted on <?= $row['post_date']; ?></p>
 
-        <img class="img-responsive" src="img/<?= $row['post_image']; ?>" alt="">
-
+        <img class="" src="img/<?= $row['post_image']; ?>" alt="" height="250px">
+        
         <br>
+        <br>
+
         <p><?= $row['post_content']; ?></p>
         <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
         <hr>
 
       <?php endwhile; ?>
-
 
     </div>
 

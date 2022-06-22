@@ -117,6 +117,8 @@ function createNewPost() {
 
     $query = mysqli_query($connection, $sql_query_new_post);
     move_uploaded_file($image_temp, "../img/$image");
+    
     header('Location: ./posts.php');
+
   }
 }

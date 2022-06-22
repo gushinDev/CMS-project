@@ -1,7 +1,7 @@
-<?php
-createNewPost();
+<?php createNewPost(); ?>
+<?php 
+  $categories = findAllCategories();
 ?>
-
 <form action="" method="POST" enctype="multipart/form-data">
 
   <div class="form-group">
@@ -11,7 +11,11 @@ createNewPost();
 
   <div class="form-group">
     <label for="post_category">Category</label>
-    <input type="text" name="category_id" class="form-control" id="post_category">
+    <select name="category_id" class="form-control" id="">
+      <?php while ($row = mysqli_fetch_assoc($categories)) : ?>
+        <option value="<?=$row['cat_id']?>"><?=$row['cat_title']?></option>
+      <?php endwhile; ?>
+    </select>
   </div>
 
   <div class="form-group">
@@ -27,7 +31,7 @@ createNewPost();
   <div class="form-group">
     <img src="" class="editPostCurrentImage" height="200px">
   </div>
-  
+
   <div class="form-group">
     <input type="file" name="image" id="image" class="form-control-file">
   </div>

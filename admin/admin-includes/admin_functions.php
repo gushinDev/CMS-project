@@ -60,7 +60,7 @@ function findAllCategories()
 function findAllPosts()
 {
   global $connection;
-  $sql = "SELECT * FROM `posts`";
+  $sql = "SELECT * , `cat_title` FROM `posts`, `categories` WHERE `cat_id` = `post_category_id`";
   $query = mysqli_query($connection, $sql);
   checkQueryFailed($query);
   return $query;

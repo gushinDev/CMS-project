@@ -20,7 +20,7 @@
          <td scope="col"><?= $row['post_id'] ?></td>
          <td scope="col"><?= $row['post_status'] ?></td>
          <td scope="col"><?= $row['post_title'] ?></td>
-         <td scope="col"><?= $row['post_category_id'] ?></td>
+         <td scope="col"><?= $row['cat_title'] ?></td>
          <td scope="col"><?= $row['post_author'] ?></td>
          <td scope="col"><?= $row['post_date'] ?></td>
          <td scope="col"><?= $row['post_tags'] ?></td>

@@ -2,6 +2,7 @@
 if (isset($_GET['post_id'])) {
   $post_id = $_GET['post_id'];
   $updatedPost = findUpdatedPost($post_id);
+  $categories = findAllCategories();
 }
 
 if (isset($_POST['update_post'])) {
@@ -22,18 +23,19 @@ if (isset($_POST['update_post'])) {
 
     <div class="form-group">
       <label for="post_category">Category</label>
-      <input type="text" name="category_id" class="form-control" id="post_category" value="<?= $row['post_category_id']; ?>">
+      <select name="category_id" class="form-control">
+        <?php while ($category = mysqli_fetch_assoc($categories)) : ?>
+          <option value="<?= $category['cat_id'] ?>" <?= $category['cat_id'] === $row['post_category_id'] ? "selected" : "" ?>>
+            <?= $category['cat_title'] ?>
+          </option>
+        <?php endwhile; ?>
+      </select>
     </div>
 
     <div class="form-group">
       <label for="author">Author</label>
       <input type="text" name="author" id="author" class="form-control" value="<?= $row['post_author']; ?>">
     </div>
-    <!-- 
-    <div class="form-check form-group">
-      <label class="form-check-label" for="exampleCheck1">Draft </label>
-      // Сделать селект =) оптионс 
-    </div> -->
 
     <div class="form-check form-group">
       <label class="form-check-label" for="exampleCheck1">Published </label>

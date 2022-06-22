@@ -86,7 +86,8 @@ function checkQueryFailed($query)
   }
 }
 
-function createNewPost() {
+function createNewPost()
+{
   if (isset($_POST['create_post'])) {
 
     global $connection;
@@ -110,8 +111,54 @@ function createNewPost() {
 
     $query = mysqli_query($connection, $sql_query_new_post);
     move_uploaded_file($image_temp, "../img/$image");
-    
-    header('Location: ./posts.php');
 
+    header('Location: ./posts.php');
   }
+}
+
+function findUpdatedPost($post_id)
+{
+  global $connection;
+ 
+    $sql = "SELECT * 
+          FROM `posts` 
+          WHERE `post_id` = '$post_id'
+          LIMIT 1";
+
+    $query = mysqli_query($connection, $sql);
+    checkQueryFailed($query);
+    return $query;
+  
+}
+
+function updateCurrentPost()
+{
+  global $connection;
+  var_dump($_POST);
+  $post_id = $_POST['post_id'];
+  $title = $_POST['title'];
+  $category_id = $_POST['category_id'];
+  $author = $_POST['author'];
+  $tags = $_POST['tags'];
+  $content = $_POST['content'];
+  $status = isset($_POST['status']) ? 'Published' : 'Not published';
+
+  $image = $_FILES['image']['name'];
+  $image_temp = $_FILES['image']['tmp_name'];
+
+  $sql = "UPDATE `posts` 
+          SET `post_title` = '$title', `post_category_id` = '$category_id', post_author = '$author', `post_content` = '$content', `post_tags` = '$tags', `post_status` = '$status'";
+  $sql .=  $image !== '' ? ", `post_image` = '$image' " : ' ';
+  $sql .= "WHERE `post_id` = '$post_id'";
+
+  $query = mysqli_query($connection, $sql);
+
+  var_dump($sql);
+
+  checkQueryFailed($query);
+
+  if ($image !== '') {
+    move_uploaded_file($image_temp, "../img/$image");
+  }
+  header('Location: ./posts.php');
 }

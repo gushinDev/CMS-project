@@ -34,10 +34,10 @@
         <a href="javascript:;" data-toggle="collapse" data-target="#posts"><i class="fa fa-fw fa-users"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
         <ul id="posts" class="collapse">
           <li>
-            <a href="#">Dropdown Item</a>
+            <a href="users.php">View all users</a>
           </li>
           <li>
-            <a href="#">Dropdown Item</a>
+            <a href="users.php?source=add_user">Add new user</a>
           </li>
         </ul>
       </li>
@@ -57,7 +57,7 @@
         <a href="categories.php"><i class="fa fa-fw fa-wrench"></i> Categories</a>
       </li>
       <li>
-        <a href="index-rtl.html"><i class="fa fa-fw fa-comment"></i> Comments</a>
+        <a href="comments.php"><i class="fa fa-fw fa-comment"></i> Comments</a>
       </li>
       <li>
         <a href="index-rtl.html"><i class="fa fa-fw fa-user"></i> Profile</a>

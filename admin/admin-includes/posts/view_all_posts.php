@@ -19,7 +19,7 @@
        <tr>
          <td scope="col"><?= $row['post_id'] ?></td>
          <td scope="col"><?= $row['post_status'] ?></td>
-         <td scope="col"><?= $row['post_title'] ?></td>
+         <td scope="col"><a href="../post.php?id=<?= $row['post_id'] ?>"><?= $row['post_title'] ?></a></td>
          <td scope="col"><?= $row['cat_title'] ?></td>
          <td scope="col"><?= $row['post_author'] ?></td>
          <td scope="col"><?= $row['post_date'] ?></td>

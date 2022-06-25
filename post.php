@@ -1,41 +1,52 @@
 <?php include('includes/header.php'); ?>
 <?php include('includes/navigation.php'); ?>
 
+
+<?php
+if (isset($_GET['id'])) {
+  $post_id = $_GET['id'];
+  $sql = "SELECT * FROM `posts` WHERE `post_id` = $post_id";
+  $query = mysqli_query($connection, $sql);
+  // checkQueryFailed($query);
+  $sql_comments = "SELECT * FROM `comments` WHERE `comment_post_id` = $post_id AND `comment_status` = 'Published'";
+  $query_comments = mysqli_query($connection, $sql_comments);
+}
+if (isset($_POST['submit'])) {
+  $comment_post_id = $_POST['comment_post_id'];
+  $comment_author = $_POST['comment_author'];
+  $comment_email = $_POST['comment_email'];
+  $comment_content = $_POST['comment_content'];
+  $comment_date = date('d-m-y');
+  $sql = "INSERT INTO `comments` (`comment_id`, `comment_post_id`, `comment_author`, `comment_email`, `comment_content`, `comment_status`, `comment_date`) 
+          VALUES (NULL, '$comment_post_id', '$comment_author', '$comment_email', '$comment_content', 'Not published', '$comment_date')";
+  $query = mysqli_query($connection, $sql);
+  header("Location: ./post.php?id=$comment_post_id");
+}
+?>
 <!-- Page Content -->
 <div class="container">
 
   <div class="row">
-
-    <!-- Blog Post Content Column -->
     <div class="col-lg-8">
-
-      <!-- Blog Post -->
       <!-- Title -->
-      <h1>Blog Post Title</h1>
+      <?php while ($row = mysqli_fetch_assoc($query)) : ?>
+        <h1><?= $row['post_title']; ?></h1>
+        <p class="lead">
+          by <a href="#"><?= $row['post_author'] ?></a>
+        </p>
+        <hr>
+        <p>
+          <span class="glyphicon glyphicon-time"></span> Posted on <?= $row['post_date'] ?>
+        </p>
+        <hr>
+        <img class="img-responsive" src="./img/<?= $row['post_image']; ?>" alt="">
+        <hr>
+        <!-- Post Content -->
+        <p>
+          <?= $row['post_content']; ?>;
+        </p>
 
-      <!-- Author -->
-      <p class="lead">
-        by <a href="#">Start Bootstrap</a>
-      </p>
-
-      <hr>
-
-      <!-- Date/Time -->
-      <p><span class="glyphicon glyphicon-time"></span> Posted on August 24, 2013 at 9:00 PM</p>
-
-      <hr>
-
-      <!-- Preview Image -->
-      <img class="img-responsive" src="http://placehold.it/900x300" alt="">
-
-      <hr>
-
-      <!-- Post Content -->
-      <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p>
+      <?php endwhile; ?>
 
       <hr>
 
@@ -44,56 +55,44 @@
       <!-- Comments Form -->
       <div class="well">
         <h4>Leave a Comment:</h4>
-        <form role="form">
+        <form action="post.php" method="POST">
+          <input type="hidden" name="comment_post_id" value="<?= $post_id; ?>">
           <div class="form-group">
-            <textarea class="form-control" rows="3"></textarea>
+            <input type="text" class="form-control" placeholder="Name" name="comment_author">
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Email" name="comment_email">
+          </div>
+          <div class="form-group">
+            <textarea class="form-control" rows="3" name="comment_content"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" name="submit">Submit</button>
         </form>
       </div>
 
       <hr>
 
       <!-- Posted Comments -->
-
-      <!-- Comment -->
-      <div class="media">
-        <a class="pull-left" href="#">
-          <img class="media-object" src="http://placehold.it/64x64" alt="">
-        </a>
-        <div class="media-body">
-          <h4 class="media-heading">Start Bootstrap
-            <small>August 25, 2014 at 9:30 PM</small>
-          </h4>
-          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-        </div>
-      </div>
-
-      <!-- Comment -->
-      <div class="media">
-        <a class="pull-left" href="#">
-          <img class="media-object" src="http://placehold.it/64x64" alt="">
-        </a>
-        <div class="media-body">
-          <h4 class="media-heading">Start Bootstrap
-            <small>August 25, 2014 at 9:30 PM</small>
-          </h4>
-          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-          <!-- Nested Comment -->
-          <div class="media">
-            <a class="pull-left" href="#">
-              <img class="media-object" src="http://placehold.it/64x64" alt="">
-            </a>
-            <div class="media-body">
-              <h4 class="media-heading">Nested Start Bootstrap
-                <small>August 25, 2014 at 9:30 PM</small>
-              </h4>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-            </div>
+      <?php while ($comment = mysqli_fetch_assoc($query_comments)) : ?>
+        <div class="media">
+          <a href="#" class="pull-left">
+            <img src="./img/user.jpeg" alt="" class="media-object" height="80px">
+          </a>
+          <div class="media-body">
+            <h4 class="media-heading">
+              <?= $comment['comment_author'] ?>
+              <small>
+                <?= $comment['comment_date'] ?>
+              </small>
+            </h4>
+            <p>
+              <?= $comment['comment_content'] ?>
+            </p>
           </div>
-          <!-- End Nested Comment -->
+
         </div>
-      </div>
+        <hr>
+      <?php endwhile; ?>
 
     </div>
 
@@ -101,8 +100,6 @@
     <?php include('includes/sidebar.php'); ?>
 
   </div>
-  <!-- /.row -->
+  <hr>
 
-<hr>
-
-<?php include('includes/footer.php'); ?>
+  <?php include('includes/footer.php'); ?>

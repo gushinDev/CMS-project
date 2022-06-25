@@ -162,3 +162,59 @@ function updateCurrentPost()
   }
   header('Location: ./posts.php');
 }
+
+function findAllComments() {
+  global $connection;
+  $sql = "SELECT * FROM `comments`";
+  $query = mysqli_query($connection, $sql);
+  checkQueryFailed($query);
+  return $query;
+}
+
+function deleteComment() {
+  
+  global $connection;
+  $comment_id = $_GET['comment_id'];
+  $sql = "DELETE FROM `comments` WHERE `comment_id` = '$comment_id'";
+  $query = mysqli_query($connection, $sql);
+  checkQueryFailed($query);
+  header("Location: ./comments.php");
+
+}
+
+
+function changeCommentStatus() {
+  global $connection;
+  if (isset($_GET['status'])) {
+    $comment_id = $_GET['comment_id'];
+    $status = $_GET['status'];
+    $sql = "UPDATE `comments` SET `comment_status` = '$status' WHERE `comment_id` = '$comment_id'";
+    $query = mysqli_query($connection, $sql);
+    checkQueryFailed($query);
+    header('Location: ./comments.php');
+  }
+}
+
+function deleteUser() {
+  if (!isset($_GET['user_id'])) {
+    return;
+  }
+  global $connection;
+  $user_id = $_GET['user_id'];
+  $sql = "DELETE FROM `users` WHERE `user_id` = $user_id";
+  $query = mysqli_query($connection, $sql);
+  checkQueryFailed($query);
+  header('Location: ./users.php');
+}
+
+function changeUserStatus() {
+  global $connection;
+  if (isset($_GET['status'])) {
+    $user_id = $_GET['user_id'];
+    $status = $_GET['status'];
+    $sql = "UPDATE `users` SET `user_role` = '$status' WHERE `user_id` = '$user_id'";
+    $query = mysqli_query($connection, $sql);
+    checkQueryFailed($query);
+    header('Location: ./users.php');
+  }
+}

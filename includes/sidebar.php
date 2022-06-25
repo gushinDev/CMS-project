@@ -31,8 +31,9 @@
           $categories = mysqli_query($connection, $sql);
 
           while ($row = mysqli_fetch_assoc($categories)) {
+            $cat_id = $row['cat_id'];
             $cat_title = $row['cat_title'];
-            echo "<li><a href='#'>{$cat_title}</a></li>";
+            echo "<li><a href='index.php?cat_id=$cat_id'>{$cat_title}</a></li>";
           } ?>
 
         </ul>

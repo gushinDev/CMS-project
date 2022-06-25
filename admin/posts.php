@@ -15,16 +15,16 @@
             }
             switch ($sourse) {
               case 'add_post':
-                include "admin-includes/add_post.php";
+                include "admin-includes/posts/add_post.php";
                 break;
               case 'delete_post':
                 deletePost();
                 break;
               case 'edit_post':
-                include "admin-includes/edit_post.php";
+                include "admin-includes/posts/edit_post.php";
                 break;
               default:
-                include('view_all_posts.php'); 
+                include('./admin-includes/posts/view_all_posts.php'); 
               break;
             }
 

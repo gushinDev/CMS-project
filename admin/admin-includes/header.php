@@ -1,6 +1,13 @@
-<?php include('../includes/db.php'); ?>
-<?php include('./admin-includes/admin_functions.php'); ?>
-<?php ob_start(); ?>
+<?php
+include('../includes/db.php');
+include('./admin-includes/admin_functions.php');
+ob_start();
+session_start();
+if (!isset($_SESSION['user_role'])) {
+  header('Location: ../');
+}
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
